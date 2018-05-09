@@ -1,34 +1,49 @@
 import React, { Component } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors } from '../styles';
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Home',
+    title: (
+      <HeaderText color={colors.primary}>
+        Flashcards
+      </HeaderText>
+    ),
     headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate('Wod')}>
-        <Text>Wod</Text>
-      </TouchableOpacity>
+      <HeaderButton right onPress={() => navigation.goBack()}>
+        <MaterialCommunityIcons name="plus" size={28} color={colors.primary} />
+      </HeaderButton>
     ),
   });
 
   render() {
     return (
-      <Wrapper>
-        <Text>Fulano</Text>
-        <Text>Belo Horizonte-MG</Text>
-        <Text>10 check-ins</Text>
-        <Text>Box tal</Text>
-      </Wrapper>
+      <CenteredView>
+        <Text>Hello!</Text>
+      </CenteredView>
     );
   }
 }
 
-const Wrapper = styled.View`
+const CenteredView = styled.ScrollView`
   flex: 1;
-  background-color: #fff;
-  align-items: center;
-  justify-content: center;
+  padding: 10px;
+  background-color: ${colors.backgroundPrimary};
 `;
 
-export { Home };
+const Text = styled.Text`
+  color: ${props => props.color || colors.default};
+`;
+
+const HeaderText = Text.extend`
+  font-size: 16;
+  font-weight: bold;
+`;
+
+const HeaderButton = styled.TouchableOpacity`
+  padding-left: ${props => props.right ? 10 : 0};
+  padding-right: ${props => props.left ? 10 : 0};
+`;
+
+export default Home;

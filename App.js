@@ -1,11 +1,11 @@
 import React from 'react';
-import createNavigator from './RootNavigator';
+import { createRootNavigator } from './RootNavigator';
 
 const App = () => {
-  const Routes = createNavigator();
+  const Navigator = createRootNavigator();
 
   return (
-    <Routes />
+    <Navigator />
   );
 };
 

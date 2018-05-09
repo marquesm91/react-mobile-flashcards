@@ -1,3 +1,1 @@
-export * from './Home';
-export * from './Profile';
-export * from './Wod';
+export { default as Home } from './Home';
