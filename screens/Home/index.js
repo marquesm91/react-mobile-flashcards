@@ -4,6 +4,17 @@ import styled from 'styled-components';
 import { Deck } from '../../components';
 import { colors } from '../../utils';
 
+const decks = [
+  {
+    name: 'History Test #1',
+    numberOfCards: 32,
+  },
+  {
+    name: 'Math Test #3',
+    numberOfCards: 12,
+  },
+];
+
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (
@@ -18,13 +29,22 @@ class Home extends Component {
     ),
   });
 
-  onDeckPressHandler = () => this.props.navigation.navigate('DeckDetail');
+  onDeckPressHandler = deck => this.props.navigation.navigate('DeckDetail',{
+    name: deck.name,
+    numberOfCards: deck.numberOfCards,
+  });
 
   render() {
     return (
       <CenteredView>
-        <Deck name="History Test #1" numberOfCards={32} onPress={this.onDeckPressHandler} />
-        <Deck name="Math Test #2" numberOfCards={12} onPress={this.onDeckPressHandler} />
+        {decks.map((deck, index) => (
+          <Deck
+            key={index}
+            name={deck.name}
+            numberOfCards={deck.numberOfCards}
+            onPress={() => this.onDeckPressHandler(deck)}
+          />
+        ))}
       </CenteredView>
     );
   }
