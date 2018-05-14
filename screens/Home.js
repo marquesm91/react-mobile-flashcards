@@ -20,7 +20,7 @@ class Home extends Component {
   render() {
     return (
       <CenteredView>
-        <Text>Hello!</Text>
+        <Text>Hello!!</Text>
       </CenteredView>
     );
   }
