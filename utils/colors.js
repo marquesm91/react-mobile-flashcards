@@ -1,4 +1,4 @@
-export const colors = {
+export default {
   default: '#444',
   primary: '#6e52ff',
   primaryInactive: '#e0c1ff',

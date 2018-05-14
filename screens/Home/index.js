@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components';
-import { colors } from '../styles';
+import { Deck } from '../../components';
+import { colors } from '../../utils';
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (
       <HeaderText color={colors.primary}>
-        Flashcards
+        FlashDecks
       </HeaderText>
     ),
     headerRight: (
@@ -17,10 +18,13 @@ class Home extends Component {
     ),
   });
 
+  onDeckPressHandler = () => this.props.navigation.navigate('DeckDetail');
+
   render() {
     return (
       <CenteredView>
-        <Text>Hello!!</Text>
+        <Deck name="History Test #1" numberOfCards={32} onPress={this.onDeckPressHandler} />
+        <Deck name="Math Test #2" numberOfCards={12} onPress={this.onDeckPressHandler} />
       </CenteredView>
     );
   }
