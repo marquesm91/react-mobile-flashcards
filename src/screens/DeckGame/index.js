@@ -3,11 +3,11 @@ import { Deck } from '../../components';
 import { Button, CenteredView, HeaderText, HeaderButton, Text } from './styles';
 import { colors } from '../../utils';
 
-class DeckDetail extends Component {
+class DeckGame extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (
       <HeaderText color={colors.primary}>
-        Deck Detail
+        Deck Game
       </HeaderText>
     ),
     headerLeft: (
@@ -18,20 +18,13 @@ class DeckDetail extends Component {
   });
 
   render() {
-    const { name, numberOfCards } = this.props.navigation.state.params;
     return (
       <CenteredView>
-        <Text>{name}</Text>
-        <Text>{numberOfCards}</Text>
-        <Button>
-          <Text>Start Quiz</Text>
-        </Button>
-        <Button>
-          <Text>Create New Question</Text>
-        </Button>
+        <Text>Deck</Text>
+        <Text>Game</Text>
       </CenteredView>
     );
   }
 }
 
-export default DeckDetail;
+export default DeckGame;

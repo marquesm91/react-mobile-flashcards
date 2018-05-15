@@ -13,7 +13,6 @@ export const CenteredView = styled.ScrollView`
 `;
 
 export const Text = styled.Text`
-  background-color: red;
   color: ${props => props.color || colors.default};
 `;
 

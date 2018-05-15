@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getDecks } from '../../storage';
 import styled from 'styled-components';
 import { Deck } from '../../components';
 import { colors } from '../../utils';
-
-const decks = [
-  {
-    name: 'History Test #1',
-    numberOfCards: 32,
-  },
-  {
-    name: 'Math Test #3',
-    numberOfCards: 12,
-  },
-];
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,11 +13,20 @@ class Home extends Component {
       </HeaderText>
     ),
     headerRight: (
-      <HeaderButton right onPress={() => navigation.goBack()}>
+      <HeaderButton right onPress={() => navigation.navigate('DeckAdd')}>
         <MaterialCommunityIcons name="plus" size={28} color={colors.primary} />
       </HeaderButton>
     ),
   });
+
+  state = {
+    decks: null,
+  }
+
+  async componentDidMount() {
+    const decks = await getDecks();
+    this.setState({ decks });
+  }
 
   onDeckPressHandler = deck => this.props.navigation.navigate('DeckDetail',{
     name: deck.name,
@@ -35,13 +34,15 @@ class Home extends Component {
   });
 
   render() {
+    const { decks } = this.state;
     return (
       <CenteredView>
-        {decks.map((deck, index) => (
+        <Text>{JSON.stringify({ decks })}</Text>
+        {decks && decks.map((deck, index) => (
           <Deck
             key={index}
-            name={deck.name}
-            numberOfCards={deck.numberOfCards}
+            title={deck.title}
+            numberOfCards={deck.questions.length}
             onPress={() => this.onDeckPressHandler(deck)}
           />
         ))}

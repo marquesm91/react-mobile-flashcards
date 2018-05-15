@@ -1,14 +1,17 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors } from './utils';
-import { Home, DeckDetail } from './screens';
+import { colors } from './src/utils';
+import { Home, DeckAdd, DeckDetail, DeckEditMode, DeckGame } from './src/screens';
 
 export const createRootNavigator = () => TabNavigator(
   {
     Home: StackNavigator({
       Home: { screen: Home },
+      DeckAdd: { screen: DeckAdd },
       DeckDetail: { screen: DeckDetail },
+      DeckEditMode: { screen: DeckEditMode },
+      DeckGame: { screen: DeckGame },
     }, {
       navigationOptions: {
         tabBarLabel: 'Decks',
