@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Deck } from '../../components';
-import { createDeck, deleteAll } from '../../storage';
-import { Button, CenteredView, HeaderText, HeaderButton, Text, Input } from './styles';
+import { Button, Container, HeaderText, HeaderButton, Text, Input } from './styles';
 import { colors } from '../../utils';
+import { createDeck, selectDeck } from '../../redux/actions';
 
 class DeckAdd extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,7 +27,9 @@ class DeckAdd extends Component {
     const { title } = this.state;
 
     if (title) {
-      await createDeck(title);
+      await this.props.createDeck(title);
+      this.props.selectDeck(title);
+      this.props.navigation.navigate('DeckDetail');
     }
   }
 
@@ -34,8 +37,7 @@ class DeckAdd extends Component {
     const { title } = this.state;
 
     return (
-      <CenteredView>
-        
+      <Container>
         <Input
           onChangeText={title => this.setState({ title })}
           value={title}
@@ -43,9 +45,14 @@ class DeckAdd extends Component {
         <Button onPress={this.createDeckHandler}>
           <Text>Create Deck</Text>
         </Button>
-      </CenteredView>
+      </Container>
     );
   }
 }
 
-export default DeckAdd;
+const mapDispatchToProps = dispatch => ({
+  createDeck: title => dispatch(createDeck(title)),
+  selectDeck: title => dispatch(selectDeck(title)),
+});
+
+export default connect(null, mapDispatchToProps)(DeckAdd);

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Deck } from '../../components';
-import { Button, CenteredView, HeaderText, HeaderButton, Text, Input } from './styles';
+import { Button, Container, HeaderText, HeaderButton, Text, Input } from './styles';
 import { colors } from '../../utils';
+import { addCardToDeck } from '../../redux/actions';
 
 class DeckEditMode extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,11 +24,22 @@ class DeckEditMode extends Component {
     answer: '',
   }
 
+  addCardToDeckHandler = () => {
+    const { title } = this.props.deck;
+    const { question, answer } = this.state;
+
+    if (question && answer) {
+      this.props.addCardToDeck(title, { question, answer });
+      this.props.navigation.goBack();
+    }
+  }
+
   render() {
+    const { title } = this.props.deck;
     const { question, answer } = this.state;
 
     return (
-      <CenteredView>
+      <Container>
         <Input
           onChangeText={question => this.setState({ question })}
           value={question}
@@ -35,12 +48,20 @@ class DeckEditMode extends Component {
           onChangeText={answer => this.setState({ answer })}
           value={answer}
         />
-        <Button>
-          <Text>Create New Question</Text>
+        <Button onPress={this.addCardToDeckHandler}>
+          <Text>Create New Question to {title}</Text>
         </Button>
-      </CenteredView>
+      </Container>
     );
   }
 }
 
-export default DeckEditMode;
+const mapStateToProps = ({ decks }) => ({
+  deck: decks.list.find(l => l.title === decks.selected),
+});
+
+const mapDispatchToProps = dispatch => ({
+  addCardToDeck: (title, card) => dispatch(addCardToDeck(title, card)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckEditMode);

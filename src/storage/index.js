@@ -3,6 +3,13 @@ import dayjs from 'dayjs';
 
 const STORAGE = 'deck-storage';
 
+const json_to_array = (json) => (
+  Object.keys(json).reduce((acc, curr) => {
+    acc.push(json[curr]);
+    return acc;
+  }, [])
+);
+
 const getStorage = async () => {
   const storage = await AsyncStorage.getItem(STORAGE);
   if (storage) {
@@ -12,33 +19,37 @@ const getStorage = async () => {
   return {};
 };
 
-export const createDeck = async (title) => {
+const createDeck = async (title) => {
   const storage = await getStorage();
   storage[title] = {};
   storage[title].title = title;
   storage[title].createdAt = dayjs().toISOString();
   storage[title].questions = [];
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
+  return json_to_array(storage);
 };
 
-export const deleteDeck = async (deck) => {
+const deleteDeck = async (title) => {
   const storage = await getStorage();
-  delete storage[deck.title];
+  delete storage[title];
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
+  return json_to_array(storage);
 };
 
-export const deleteAll = async () => {
-  const storage = {};
-  await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
+const deleteAll = async () => {
+  const emptyStorage = {};
+  await AsyncStorage.setItem(STORAGE, JSON.stringify(emptyStorage));
+  return [];
 };
 
-export const addCardToDeck = async (target, card) => {
+const addCardToDeck = async (target, card) => {
   const storage = await getStorage();
   storage[target].questions.push(card);
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
+  return json_to_array(storage);
 };
 
-export const addHistoryToDeck = async (target, history) => {
+const addHistoryToDeck = async (target, history) => {
   const storage = await getStorage();
   const key = dayjs().diff(createdAt, 'days');
 
@@ -48,9 +59,10 @@ export const addHistoryToDeck = async (target, history) => {
 
   storage[target].history[key].push(history);
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
+  return json_to_array(storage);
 };
 
-export const getDeck = async (title, key = null) => {
+const getDeck = async (title, key = null) => {
   const storage = await getStorage();
   if (key) {
     return storage[title][key];
@@ -59,14 +71,20 @@ export const getDeck = async (title, key = null) => {
   return storage[title];
 };
 
-export const getDecks = async (title, key = null) => {
+const getDecks = async (title, key = null) => {
   const storage = await getStorage();
-  
-  return Object.keys(storage).reduce((acc, curr) => {
-    acc.push(storage[curr]);
-    return acc;
-  }, []);
+  return json_to_array(storage);
 };
+
+export default {
+  getDecks,
+  getDeck,
+  addHistoryToDeck,
+  addCardToDeck,
+  deleteAll,
+  deleteDeck,
+  createDeck,
+}
 
 /* Interface Storage Object
 {

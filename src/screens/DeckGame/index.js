@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Deck } from '../../components';
-import { Button, CenteredView, HeaderText, HeaderButton, Text } from './styles';
+import { Button, Container, HeaderText, HeaderButton, Text } from './styles';
 import { colors } from '../../utils';
+import notifications from '../../notifications';
 
 class DeckGame extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,12 +18,17 @@ class DeckGame extends Component {
     ),
   });
 
+  setTomorrowNotification = () => (
+    notifications.clearLocalNotification()
+      .then(notifications.setLocalNotification)
+  )
+
   render() {
     return (
-      <CenteredView>
+      <Container>
         <Text>Deck</Text>
         <Text>Game</Text>
-      </CenteredView>
+      </Container>
     );
   }
 }

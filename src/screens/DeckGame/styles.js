@@ -7,7 +7,8 @@ export const Button = styled.TouchableOpacity`
   border: 1px solid ${colors.default};
 `;
 
-export const CenteredView = styled.ScrollView`
+export const Container = styled.View`
+  flex: 1;
   padding: 10px;
   background-color: ${colors.backgroundPrimary};
 `;

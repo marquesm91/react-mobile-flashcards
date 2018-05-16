@@ -1,13 +1,7 @@
 import styled from 'styled-components';
 import { colors } from '../../utils';
 
-export const Button = styled.TouchableOpacity`
-  padding: 5px 10px;
-  margin: 3px 0;
-  border: 1px solid ${colors.default};
-`;
-
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   padding: 10px;
   background-color: ${colors.backgroundPrimary};

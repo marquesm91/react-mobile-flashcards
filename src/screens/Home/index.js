@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getDecks } from '../../storage';
-import styled from 'styled-components';
+import { HeaderButton, HeaderText, Container, Text } from './styles';
 import { Deck } from '../../components';
 import { colors } from '../../utils';
+import { getDecks, selectDeck } from '../../redux/actions';
 
-class Home extends Component {
+class Home extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: (
       <HeaderText color={colors.primary}>
@@ -20,25 +21,27 @@ class Home extends Component {
   });
 
   state = {
-    decks: null,
+    decksLoaded: false,
   }
 
   async componentDidMount() {
-    const decks = await getDecks();
-    this.setState({ decks });
+    await this.props.getDecks();
+    this.setState({ decksLoaded: true });
   }
 
-  onDeckPressHandler = deck => this.props.navigation.navigate('DeckDetail',{
-    name: deck.name,
-    numberOfCards: deck.numberOfCards,
-  });
+  onDeckPressHandler = deck => {
+    this.props.selectDeck(deck.title);
+    this.props.navigation.navigate('DeckDetail');
+  }
 
   render() {
-    const { decks } = this.state;
+    if (!this.state.decksLoaded) return null;
+
+    const { decks } = this.props;
+
     return (
-      <CenteredView>
-        <Text>{JSON.stringify({ decks })}</Text>
-        {decks && decks.map((deck, index) => (
+      <Container>
+        {decks.map((deck, index) => (
           <Deck
             key={index}
             title={deck.title}
@@ -46,29 +49,18 @@ class Home extends Component {
             onPress={() => this.onDeckPressHandler(deck)}
           />
         ))}
-      </CenteredView>
+      </Container>
     );
   }
 }
 
-const CenteredView = styled.ScrollView`
-  flex: 1;
-  padding: 10px;
-  background-color: ${colors.backgroundPrimary};
-`;
+const mapStateToProps = ({ decks }) => ({
+  decks: decks.list,
+});
 
-const Text = styled.Text`
-  color: ${props => props.color || colors.default};
-`;
+const mapDispatchToProps = dispatch => ({
+  getDecks: () => dispatch(getDecks()),
+  selectDeck: (title) => dispatch(selectDeck(title)),
+});
 
-const HeaderText = Text.extend`
-  font-size: 16;
-  font-weight: bold;
-`;
-
-const HeaderButton = styled.TouchableOpacity`
-  padding-left: ${props => props.right ? 10 : 0};
-  padding-right: ${props => props.left ? 10 : 0};
-`;
-
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
