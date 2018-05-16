@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Deck } from '../../components';
+import { connect } from 'react-redux';
+import Swiper from 'react-native-swiper'
+import { Deck, Toggler } from '../../components';
 import { Button, Container, HeaderText, HeaderButton, Text } from './styles';
 import { colors } from '../../utils';
 import notifications from '../../notifications';
@@ -23,14 +25,34 @@ class DeckGame extends Component {
       .then(notifications.setLocalNotification)
   )
 
+  onTryAnswerHandler = answer => {
+    console.log(answer);
+  }
+
   render() {
+    const { deck } = this.props;
+
     return (
-      <Container>
-        <Text>Deck</Text>
-        <Text>Game</Text>
-      </Container>
+      <Swiper showsButtons showsPagination={false} loop={false}>
+        {deck.questions.map(({ question, answer }, index) => (
+          <Container key={index}>
+            <Text>{index+1}/{deck.questions.length}</Text>
+            <Toggler question={question} answer={answer} />
+            <Button onPress={() => this.onTryAnswerHandler('correct')}>
+              <Text>Correct</Text>
+            </Button>
+            <Button onPress={() => this.onTryAnswerHandler('incorrect')}>
+              <Text>Incorrect</Text>
+            </Button>
+          </Container>
+        ))}
+      </Swiper>
     );
   }
 }
 
-export default DeckGame;
+const mapStateToProps = ({ decks }) => ({
+  deck: decks.list.find(l => l.title === decks.selected),
+});
+
+export default connect(mapStateToProps)(DeckGame);
