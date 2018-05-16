@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colors } from '../../utils';
 
 export const Button = styled.TouchableOpacity`
@@ -11,6 +11,11 @@ export const Container = styled.View`
   flex: 1;
   padding: 10px;
   background-color: ${colors.backgroundPrimary};
+
+  ${props => props.centered && css `
+    justify-content: center;
+    align-items: center;
+  `}
 `;
 
 export const Text = styled.Text`

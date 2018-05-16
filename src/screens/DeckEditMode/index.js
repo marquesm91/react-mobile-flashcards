@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import { Deck } from '../../components';
 import { Button, Container, HeaderText, HeaderButton, Text, Input } from './styles';
 import { colors } from '../../utils';
@@ -29,8 +30,15 @@ class DeckEditMode extends Component {
     const { question, answer } = this.state;
 
     if (question && answer) {
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'DeckDetail' })
+        ]
+      });
+      
       this.props.addCardToDeck(title, { question, answer });
-      this.props.navigation.goBack();
+      this.props.navigation.dispatch(resetAction);
     }
   }
 
