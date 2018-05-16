@@ -39,6 +39,11 @@ class DeckGame extends Component {
     }));
   }
 
+<<<<<<< HEAD
+=======
+  checkIncorrectHandler = () => this.setState(({ total }) => ({ total: total + 1 }));
+
+>>>>>>> ba563b3b8831d8ca90259cf50ffef8c49a6f35ca
   resetGame = () => this.setState({ results: {} });
 
   render() {
