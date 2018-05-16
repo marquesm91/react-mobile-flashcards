@@ -1,14 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import dayjs from 'dayjs';
+import { json_to_array } from '../utils';
 
 const STORAGE = 'deck-storage';
-
-const json_to_array = (json) => (
-  Object.keys(json).reduce((acc, curr) => {
-    acc.push(json[curr]);
-    return acc;
-  }, [])
-);
 
 const getStorage = async () => {
   const storage = await AsyncStorage.getItem(STORAGE);

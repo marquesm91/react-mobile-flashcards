@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import { Deck } from '../../components';
 import { Button, Container, HeaderText, HeaderButton, Text } from './styles';
 import { colors } from '../../utils';
 import { deleteDeck } from '../../redux/actions';
-import { NavigationActions } from 'react-navigation';
 
 class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
