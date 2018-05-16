@@ -39,6 +39,10 @@ class DeckEditMode extends Component {
       
       this.props.addCardToDeck(title, { question, answer });
       this.props.navigation.dispatch(resetAction);
+<<<<<<< HEAD
+=======
+      //this.props.navigation.goBack();
+>>>>>>> ba563b3b8831d8ca90259cf50ffef8c49a6f35ca
     }
   }
 
