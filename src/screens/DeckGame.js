@@ -117,7 +117,7 @@ class DeckGame extends Component {
         {deck.questions.map(({ question, answer }, index) => (
           <Container key={index}>
             <Wrapper justify="center" align="center">
-              <Toggler question={question} answer={answer} />
+              <Toggler question={question} answer={answer} spoiler={results[index] !== undefined} />
             </Wrapper>
             <Wrapper justify="center" align="center">
               {results[index] !== undefined

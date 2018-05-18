@@ -10,7 +10,16 @@ class Toggler extends PureComponent {
 
   render() {
     const { show } = this.state;
-    const { question, answer } = this.props;
+    const { question, answer, spoiler } = this.props;
+
+    if (spoiler) {
+      return (
+        <Fragment>
+          <Text center bold size={36}>{question}</Text>
+          <Text center size={24}>{answer}</Text>
+        </Fragment>
+      );
+    }
 
     return (
       <Fragment>
