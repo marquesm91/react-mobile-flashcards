@@ -68,6 +68,7 @@ class Quiz extends Component {
       taps: 0,
       targetTaps: targetTaps - 1
     }));
+    this.quizSwiper.scrollBy(-1);
   }
 
   _onMomentumScrollEnd = (e, { index }) => {
