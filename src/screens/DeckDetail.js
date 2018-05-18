@@ -66,7 +66,7 @@ class DeckDetail extends Component {
             <Text primary center bold size={16}>Start Quiz</Text>
           </Button>
           <Button secondary onPress={() => this.props.navigation.navigate('DeckEditMode')}>
-            <Text secondary center bold size={16}>Create New Card</Text>
+            <Text secondary center bold size={16}>Create New Question</Text>
           </Button>
         </Wrapper>
         <Wrapper justify="center" align="center">

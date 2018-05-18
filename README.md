@@ -48,3 +48,4 @@ All features listed are a plus and not mentioned in challenge's specification.
 * Delete a deck.
 * View with total of correct answers (absolute and relative) and check again your individual results by card
 * You can add multiple cards at the same screen. (You don't have to navigate back to do that)
+* When you try to start a quiz with an empty deck, a view you warning you to Create a New Question
