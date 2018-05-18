@@ -45,7 +45,7 @@ After the default installation with `create-react-native-app`, three 3rd party l
 
 All features listed are a plus and not mentioned in challenge's specification.
 
-* Delete a deck.
+* Delete a deck. (An Alert will show to you to really confirm your action. Prevent miss taping)
 * View with total of correct answers (absolute and relative) and check again your individual results by card
 * You can add multiple cards at the same screen. (You don't have to navigate back to do that)
 * When you try to start a quiz with an empty deck, a view you warning you to Create a New Question
