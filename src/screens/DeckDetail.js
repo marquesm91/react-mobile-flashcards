@@ -40,7 +40,14 @@ class DeckDetail extends Component {
     const { deck, deleteDeck, navigation } = this.props;
 
     deleteDeck(deck.title);
-    navigation.goBack();
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: constants.HOME })
+      ]
+    });
+
+    navigation.dispatch(resetAction)
   }
 
   confirmDeleteHandler = () => {

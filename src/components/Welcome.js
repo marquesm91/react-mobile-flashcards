@@ -4,8 +4,6 @@ import { AnimatedView } from '../components';
 import { colors, constants } from '../utils';
 import { Button, Text, CenteredView, Dot } from '../styles';
 
-const { screens } = constants;
-
 const Welcome = ({ navigation }) => (
   <CenteredView>
     <AnimatedView duration={1250}>
@@ -37,7 +35,7 @@ const Welcome = ({ navigation }) => (
       </Text>
     </AnimatedView>
     <AnimatedView duration={1750}>
-      <Button primary onPress={() => navigation.navigate(screens.DECK_ADD)}>
+      <Button primary onPress={() => navigation.navigate(constants.DECK_ADD)}>
         <Text primary center bold size={16}>Create a Deck</Text>
       </Button>
     </AnimatedView>
