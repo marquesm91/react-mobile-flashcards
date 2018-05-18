@@ -14,9 +14,9 @@ class Toggler extends PureComponent {
 
     return (
       <Fragment>
-        <Text>{show ? answer : question}</Text>
-        <Button onPress={() => this.setState(({ show }) => ({ show: !show }))}>
-          <Text>{show ? 'Question' : 'Answer'}</Text>
+        <Text center bold size={36}>{show ? answer : question}</Text>
+        <Button ghost onPress={() => this.setState(({ show }) => ({ show: !show }))}>
+          <Text ghost center bold size={14}>{show ? 'Question' : 'Answer'}</Text>
         </Button>
       </Fragment>
     );

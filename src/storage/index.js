@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import dayjs from 'dayjs';
-import { json_to_array } from '../utils';
+import { modifiers } from '../utils';
 
 const STORAGE = 'deck-storage';
 
@@ -20,14 +20,14 @@ const createDeck = async (title) => {
   storage[title].createdAt = dayjs().toISOString();
   storage[title].questions = [];
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
-  return json_to_array(storage);
+  return modifiers.json_to_array(storage);
 };
 
 const deleteDeck = async (title) => {
   const storage = await getStorage();
   delete storage[title];
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
-  return json_to_array(storage);
+  return modifiers.json_to_array(storage);
 };
 
 const deleteAll = async () => {
@@ -40,7 +40,7 @@ const addCardToDeck = async (target, card) => {
   const storage = await getStorage();
   storage[target].questions.push(card);
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
-  return json_to_array(storage);
+  return modifiers.json_to_array(storage);
 };
 
 const addHistoryToDeck = async (target, history) => {
@@ -53,7 +53,7 @@ const addHistoryToDeck = async (target, history) => {
 
   storage[target].history[key].push(history);
   await AsyncStorage.setItem(STORAGE, JSON.stringify(storage));
-  return json_to_array(storage);
+  return modifiers.json_to_array(storage);
 };
 
 const getDeck = async (title, key = null) => {
@@ -67,7 +67,7 @@ const getDeck = async (title, key = null) => {
 
 const getDecks = async (title, key = null) => {
   const storage = await getStorage();
-  return json_to_array(storage);
+  return modifiers.json_to_array(storage);
 };
 
 export default {

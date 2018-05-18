@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { HeaderButton, HeaderText, Container, Text } from './styles';
-import { Deck } from '../../components';
-import { colors } from '../../utils';
-import { getDecks, selectDeck } from '../../redux/actions';
+import { HeaderButton, Container, Text, HomeHeader, CenteredView } from './styles';
+import { Deck } from '../components';
+import { colors } from '../utils';
+import { getDecks, selectDeck } from '../redux/actions';
 
 class Home extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: (
-      <HeaderText color={colors.primary}>
-        FlashDecks
-      </HeaderText>
+      <Text color={colors.purple} size={20} bold>
+        Flash Decks
+      </Text>
     ),
     headerRight: (
       <HeaderButton right onPress={() => navigation.navigate('DeckAdd')}>
-        <MaterialCommunityIcons name="plus" size={28} color={colors.primary} />
+        <MaterialCommunityIcons name="plus" size={32} color={colors.purple} />
       </HeaderButton>
     ),
   });
@@ -39,8 +39,22 @@ class Home extends PureComponent {
 
     const { decks } = this.props;
 
+    if (!decks.length) {
+      return (
+        <CenteredView horizontal>
+          <Text size={16} bold>
+            Add new deck!
+          </Text>
+        </CenteredView>
+      );
+    }
+
     return (
       <Container>
+        <HomeHeader>
+          <Text size={18} bold>Deck name</Text>
+          <Text size={18} bold>Number of Cards</Text>
+        </HomeHeader>
         {decks.map((deck, index) => (
           <Deck
             key={index}

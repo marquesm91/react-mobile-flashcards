@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { Deck } from '../../components';
-import { Button, Container, HeaderText, HeaderButton, Text, Input } from './styles';
-import { colors } from '../../utils';
-import { createDeck, selectDeck } from '../../redux/actions';
+import { Deck, DismissKeyboardView } from '../components';
+import { colors } from '../utils';
+import { createDeck, selectDeck } from '../redux/actions';
+import {
+  Button,
+  Wrapper,
+  HeaderButton,
+  Text,
+  Input
+} from './styles';
 
 class DeckAdd extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (
-      <HeaderText color={colors.primary}>
-        Deck Add
-      </HeaderText>
+      <Text color={colors.purple} size={20} bold>
+        Add Deck
+      </Text>
     ),
     headerLeft: (
       <HeaderButton left onPress={() => navigation.goBack()}>
-        <Text>Back</Text>
+        <Text size={18} bold>Back</Text>
       </HeaderButton>
     ),
   });
@@ -37,15 +44,17 @@ class DeckAdd extends Component {
     const { title } = this.state;
 
     return (
-      <Container>
+      <DismissKeyboardView centered>
         <Input
+          placeholder="How about React?"
           onChangeText={title => this.setState({ title })}
           value={title}
+          size={16}
         />
-        <Button onPress={this.createDeckHandler}>
-          <Text>Create Deck</Text>
+        <Button primary onPress={this.createDeckHandler}>
+          <Text primary bold center size={16}>Create New Deck</Text>
         </Button>
-      </Container>
+      </DismissKeyboardView>
     );
   }
 }
