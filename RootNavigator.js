@@ -1,6 +1,5 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from './src/utils';
 import { Home, DeckAdd, DeckDetail, DeckEditMode, DeckGame } from './src/screens';
 
@@ -12,10 +11,6 @@ export const createRootNavigator = () => StackNavigator({
   DeckGame: { screen: DeckGame },
 }, {
   navigationOptions: {
-    tabBarLabel: 'Decks',
-    tabBarIcon: ({ tintColor }) => (
-      <MaterialCommunityIcons name="cards" color={tintColor} size={24} />
-    ),
     headerStyle: {
       paddingRight: 10,
       paddingLeft: 10,

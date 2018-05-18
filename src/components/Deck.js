@@ -1,11 +1,9 @@
 import React from 'react';
-import { ContainerCard, Text, Wrapper } from './styles';
-import { colors } from '../utils';
+import { ContainerCard } from './styles';
 
-const Deck = ({ title, numberOfCards, onPress }) => (
-  <ContainerCard onPress={onPress}>
-    <Text size={18} bold color={colors.white}>{title}</Text>
-    <Text size={18} bold color={colors.white}>{numberOfCards}</Text>
+const Deck = ({ children, onPress, ...props }) => (
+  <ContainerCard onPress={onPress} {...props}>
+    {children}
   </ContainerCard>
 );
 

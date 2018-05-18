@@ -61,12 +61,20 @@ export const KeyboardAvoidingViewContainer = styled.KeyboardAvoidingView.attrs({
 export const ContainerCard = styled.TouchableOpacity`
   padding: 15px 10px;
   margin: 10px 0;
-  border: 1px solid ${colors.purple};
   border-radius: 3px;
   flex-direction: row;
   justify-content: space-between;
-  background-color: ${colors.purple};
-  box-shadow: 0px 4.5px 1.2px rgba(0,0,0,0.5);
+
+  ${props => props.primary && css `
+    background-color: ${colors.purple};
+    border: 1px solid ${colors.purple};
+    box-shadow: 0px 2.5px 2px rgba(0,0,0,0.8);
+  `}
+  ${props => props.secondary && css `
+    background-color: ${colors.white};
+    border-color: ${colors.lightwhite};
+    box-shadow: 0px 3px 0.4px rgba(187, 187, 187, 0.7);
+  `}
 `;
 
 export const Container = styled.View`

@@ -2,10 +2,19 @@ import React, { Component, Fragment } from 'react';
 import AnimateNumber from 'react-native-animate-number';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper'
-import { Button, Container, HeaderButton, Text, Wrapper } from './styles';
 import { Deck, Toggler } from '../components';
 import { colors, modifiers } from '../utils';
 import notifications from '../notifications';
+import {
+  Button,
+  ScrollViewContainer,
+  ContainerCard,
+  Container,
+  HeaderButton,
+  Text,
+  Wrapper,
+  SwipperButton,
+} from './styles';
 
 class DeckGame extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -39,7 +48,7 @@ class DeckGame extends Component {
     }));
 
     if (key < this.props.deck.questions.length) {
-      this.swiper.scrollBy(1);
+      this.gameSwiper.scrollBy(1);
     }
   }
 
@@ -73,47 +82,73 @@ class DeckGame extends Component {
         </Container>
       );
     }
-    
-    const arr = modifiers.json_to_array(this.state.results);
+
+    const arr = modifiers.json_to_array(results);
 
     if (arr.length === deck.questions.length) {
       const corrects = arr.filter(a => a).length;
       const total = deck.questions.length;
+
       return (
-        <Container>
-          <Wrapper flex={2} justify="center" align="center">
-            <Text size={16}>
-              You answer <Text bold size={22} color={colors.purple}>{corrects}</Text> {modifiers.use_plural('card', corrects)} correctly!
-            </Text>
-          </Wrapper>
-          <Wrapper justify="center" align="center">
-            <Text size={36} bold color={colors.purple}>
-              <AnimateNumber
-                value={Math.floor((corrects/total) * 100)}
-                timing={(interval, progress) => (
-                  // fast start, slow end
-                  interval * (1 - Math.cos(Math.PI*progress)) * 1.8
-                )}
-                countBy={2}
-                formatter={val => `${val}%`}
-              />
-            </Text>
-            <Text size={23} bold>of total</Text>
-          </Wrapper>
-          <Wrapper flex={2} justify="center" align="center">
-            <Button primary onPress={() => this.props.navigation.navigate('DeckDetail')}>
-              <Text primary bold center size={16}>Back to Deck</Text>
-            </Button>
-            <Button secondary onPress={this.resetGame}>
-              <Text secondary bold center size={16}>Restart Quiz</Text>
-            </Button>
-          </Wrapper>
-        </Container>
+        <ScrollViewContainer>
+          <Container>
+            <Wrapper flex={2} justify="center" align="center">
+              <Text size={16}>
+                You answer <Text bold size={22} color={colors.purple}>{corrects}</Text> {modifiers.use_plural('card', corrects)} correctly!
+              </Text>
+            </Wrapper>
+            <Wrapper justify="center" align="center" style={{ marginTop: 20, marginBottom: 20 }}>
+              <Text size={36} bold color={colors.purple}>
+                <AnimateNumber
+                  value={Math.floor((corrects / total) * 100)}
+                  timing={(interval, progress) => (
+                    // fast start, slow end
+                    interval * (1 - Math.cos(Math.PI * progress)) * 1.8
+                  )}
+                  countBy={2}
+                  formatter={val => `${val}%`}
+                />
+              </Text>
+              <Text size={23} bold>of total</Text>
+            </Wrapper>
+            <Wrapper flex={2} justify="center" align="center">
+              <Button primary onPress={() => this.props.navigation.navigate('DeckDetail')}>
+                <Text primary bold center size={16}>Back to Deck</Text>
+              </Button>
+              <Button secondary onPress={this.resetGame}>
+                <Text secondary bold center size={16}>Restart Quiz</Text>
+              </Button>
+            </Wrapper>
+          </Container>
+          <Container>
+            {arr.map((result, index) => (
+              <ContainerCard key={index}>
+                <Wrapper>
+                  <Text size={14} bold>Card #{index+1}</Text>
+                  <Text size={12} bold color={this.getColorByResult(index)}>{this.getLabelByResult(index)}</Text>
+                </Wrapper>
+                <Wrapper flex={3} align="flex-end">
+                  <Text size={12} bold>{deck.questions[index].question}</Text>
+                  <Text size={10}>{deck.questions[index].answer}</Text>
+                </Wrapper>
+              </ContainerCard>
+            ))}
+          </Container>
+          </ScrollViewContainer>
       );
     }
-  
+
     return (
-      <Swiper showsButtons showsPagination={false} loop={false} ref={ref => this.swiper = ref}>
+      <Swiper
+        bounces
+        showsButtons
+        showsPagination={false}
+        loop={false}
+        ref={ref => this.gameSwiper = ref}
+        buttonColor={colors.purple}
+        nextButton={<SwipperButton>›</SwipperButton>}
+        prevButton={<SwipperButton>‹</SwipperButton>}
+      >
         {deck.questions.map(({ question, answer }, index) => (
           <Container key={index}>
             <Wrapper justify="center" align="center">
@@ -123,17 +158,17 @@ class DeckGame extends Component {
               {results[index] !== undefined
                 ? <Text size={20} bold center>Marked as <Text size={20} bold color={this.getColorByResult(index)}>{this.getLabelByResult(index)}</Text></Text>
                 : <Fragment>
-                    <Button correct onPress={() => this.checkProgressHandler(index, true)}>
-                      <Text correct bold center size={16}>Correct</Text>
-                    </Button>
-                    <Button danger onPress={() => this.checkProgressHandler(index, false)}>
-                      <Text danger bold center size={16}>Incorrect</Text>
-                    </Button>
-                  </Fragment>
+                  <Button correct onPress={() => this.checkProgressHandler(index, true)}>
+                    <Text correct bold center size={16}>Correct</Text>
+                  </Button>
+                  <Button danger onPress={() => this.checkProgressHandler(index, false)}>
+                    <Text danger bold center size={16}>Incorrect</Text>
+                  </Button>
+                </Fragment>
               }
             </Wrapper>
             <Wrapper justify="center" align="center">
-              <Text size={16} bold>{index+1} of {deck.questions.length}</Text>
+              <Text size={16} bold>{index + 1} of {deck.questions.length}</Text>
             </Wrapper>
           </Container>
         ))}

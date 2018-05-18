@@ -16,7 +16,7 @@ class DeckAdd extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (
       <Text color={colors.purple} size={20} bold>
-        Add Deck
+        Create Deck
       </Text>
     ),
     headerLeft: (
@@ -28,6 +28,7 @@ class DeckAdd extends Component {
 
   state = {
     title: '',
+    height: 0,
   }
 
   createDeckHandler = async () => {
@@ -41,15 +42,19 @@ class DeckAdd extends Component {
   }
 
   render() {
-    const { title } = this.state;
+    const { title, height } = this.state;
 
     return (
       <DismissKeyboardView centered>
         <Input
-          placeholder="How about React?"
+          placeholder="Maybe your favorite subject?"
           onChangeText={title => this.setState({ title })}
           value={title}
           size={16}
+          height={Math.max(40, height)}
+            onContentSizeChange={event => (
+              this.setState({ height: event.nativeEvent.contentSize.height }
+            ))}
         />
         <Button primary onPress={this.createDeckHandler}>
           <Text primary bold center size={16}>Create New Deck</Text>

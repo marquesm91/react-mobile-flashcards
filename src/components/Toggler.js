@@ -15,7 +15,7 @@ class Toggler extends PureComponent {
     if (spoiler) {
       return (
         <Fragment>
-          <Text center bold size={36}>{question}</Text>
+          <Text center bold size={30}>{question}</Text>
           <Text center size={24}>{answer}</Text>
         </Fragment>
       );
@@ -23,7 +23,7 @@ class Toggler extends PureComponent {
 
     return (
       <Fragment>
-        <Text center bold size={36}>{show ? answer : question}</Text>
+        <Text center bold size={30}>{show ? answer : question}</Text>
         <Button ghost onPress={() => this.setState(({ show }) => ({ show: !show }))}>
           <Text ghost center bold size={14}>{show ? 'Question' : 'Answer'}</Text>
         </Button>

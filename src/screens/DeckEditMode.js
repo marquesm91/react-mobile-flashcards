@@ -43,6 +43,8 @@ class DeckEditMode extends Component {
     dirty: false,
     cardsAdd: 0,
     taps: 0,
+    questionHeight: 0,
+    answerHeight: 0,
   }
 
   addCardToDeckHandler = (options) => {
@@ -68,9 +70,13 @@ class DeckEditMode extends Component {
         this.props.navigation.dispatch(resetAction);
       } else {
         this.setState(({ cardsAdd, taps }) => ({
+          question: '',
+          answer: '',
           dirty: false,
           cardsAdd: cardsAdd + 1,
           taps: 0,
+          questionHeight: 0,
+          answerHeight: 0,
         }));
       }
     }
@@ -84,7 +90,7 @@ class DeckEditMode extends Component {
 
     /* Show user it is useless to tap multiple times on button to add something won't */
     if (taps >= 2) {
-      return <Text>Hey! You <Text size={12} bold color={colors.purple}>already add</Text> that card!</Text>;
+      return <Text>Hey! You <Text size={12} bold>already add</Text> that card!</Text>;
     }
 
     /* Render a nice counter footer when add at least 1 card */
@@ -96,7 +102,7 @@ class DeckEditMode extends Component {
   }
 
   render() {
-    const { question, answer, cardsAdd } = this.state;
+    const { question, answer, cardsAdd, questionHeight, answerHeight } = this.state;
 
     return (
       <DismissKeyboardView>
@@ -106,12 +112,20 @@ class DeckEditMode extends Component {
             onChangeText={value => this.changeInputHandler('question', value)}
             value={question}
             size={16}
+            height={Math.max(40, questionHeight)}
+            onContentSizeChange={event => (
+              this.setState({ questionHeight: event.nativeEvent.contentSize.height }
+            ))}
           />
           <Input
             placeholder="Pick a answer"
             onChangeText={value => this.changeInputHandler('answer', value)}
             value={answer}
             size={16}
+            height={Math.max(40, answerHeight)}
+            onContentSizeChange={event => (
+              this.setState({ answerHeight: event.nativeEvent.contentSize.height }
+            ))}
           />
         </Wrapper>
         <Wrapper flex={2} justify="flex-start" align="center">
