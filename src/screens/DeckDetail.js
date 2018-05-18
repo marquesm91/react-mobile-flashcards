@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { Button, Container, HeaderButton, Text, Wrapper } from './styles';
@@ -35,6 +36,18 @@ class DeckDetail extends Component {
     this.props.navigation.goBack();
   }
 
+  confirmDeleteHandler = () => {
+    Alert.alert(
+      `Delete ${this.props.deck.title} deck`,
+      'Are you sure you want to delete this deck?',
+      [
+        { text: 'OK', onPress: () => this.deleteDeckHandler() },
+        { text: 'Cancel', style: 'cancel' },
+      ],
+      { cancelable: false }
+    )
+  }
+
   render() {
     const { deck } = this.props;
 
@@ -57,7 +70,7 @@ class DeckDetail extends Component {
           </Button>
         </Wrapper>
         <Wrapper justify="center" align="center">
-          <Button danger onPress={this.deleteDeckHandler}>
+          <Button danger onPress={this.confirmDeleteHandler}>
             <Text danger center bold size={14}>Delete Deck</Text>
           </Button>
         </Wrapper>
