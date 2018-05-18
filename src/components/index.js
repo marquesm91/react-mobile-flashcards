@@ -1,4 +1,9 @@
 export { default as AnimatedView } from './AnimatedView';
 export { default as Deck } from './Deck';
+export { default as DeckList } from './DeckList';
 export { default as DismissKeyboardView } from './DismissKeyboardView';
+export { default as Input } from './Input';
+export { default as Quiz } from './Quiz';
+export { default as Results } from './Results';
 export { default as Toggler } from './Toggler';
+export { default as Welcome } from './Welcome';

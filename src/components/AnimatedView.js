@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, View } from 'react-native';
-import { KeyboardAvoidingViewContainer, Container } from './styles';
+import { KeyboardAvoidingViewContainer, Container } from '../styles';
 
 class AnimatedView extends Component {
   state = {

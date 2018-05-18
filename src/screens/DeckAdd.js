@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import { Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { Deck, DismissKeyboardView } from '../components';
-import { colors } from '../utils';
-import { createDeck, selectDeck } from '../redux/actions';
-import {
-  Button,
-  Wrapper,
-  HeaderButton,
-  Text,
-  Input
-} from './styles';
+import { DismissKeyboardView, Input } from '../components';
+import { colors, constants } from '../utils';
+import { createDeck, selectDeck, resetInputs } from '../redux/actions';
+import { Button, HeaderButton, Text } from '../styles';
 
 class DeckAdd extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,36 +19,21 @@ class DeckAdd extends Component {
     ),
   });
 
-  state = {
-    title: '',
-    height: 0,
-  }
-
   createDeckHandler = async () => {
-    const { title } = this.state;
+    const { title, createDeck, selectDeck, resetInputs, navigation } = this.props;
 
     if (title) {
-      await this.props.createDeck(title);
-      this.props.selectDeck(title);
-      this.props.navigation.navigate('DeckDetail');
+      await createDeck(title);
+      selectDeck(title);
+      resetInputs();
+      navigation.navigate(constants.DECK_DETAIL);
     }
   }
 
   render() {
-    const { title, height } = this.state;
-
     return (
       <DismissKeyboardView centered>
-        <Input
-          placeholder="Maybe your favorite subject?"
-          onChangeText={title => this.setState({ title })}
-          value={title}
-          size={16}
-          height={Math.max(40, height)}
-            onContentSizeChange={event => (
-              this.setState({ height: event.nativeEvent.contentSize.height }
-            ))}
-        />
+        <Input name={constants.TITLE} placeholder="Maybe your favorite subject?" />
         <Button primary onPress={this.createDeckHandler}>
           <Text primary bold center size={16}>Create New Deck</Text>
         </Button>
@@ -64,9 +42,14 @@ class DeckAdd extends Component {
   }
 }
 
+const mapStateToProps = ({ inputs }) => ({
+  title: inputs[constants.TITLE] ? inputs[constants.TITLE] : '',
+})
+
 const mapDispatchToProps = dispatch => ({
   createDeck: title => dispatch(createDeck(title)),
   selectDeck: title => dispatch(selectDeck(title)),
+  resetInputs: () => dispatch(resetInputs()),
 });
 
-export default connect(null, mapDispatchToProps)(DeckAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckAdd);
