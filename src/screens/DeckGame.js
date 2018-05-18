@@ -64,11 +64,11 @@ class DeckGame extends Component {
     if (!deck.questions.length) {
       return (
         <Container centered>
-          <Text size={16} bold>
-            This quiz doesn't have questions yet!
+          <Text size={16}>
+            This quiz <Text size={16} bold>doesn't have questions</Text> yet!
           </Text>
           <Button primary style={{ marginTop: 50 }} onPress={() => this.props.navigation.navigate('DeckEditMode')}>
-            <Text primary bold center size={16}>Create a New Question</Text>
+            <Text primary bold center size={16}>Create Cards</Text>
           </Button>
         </Container>
       );

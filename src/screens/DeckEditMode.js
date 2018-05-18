@@ -15,18 +15,27 @@ import {
 } from './styles';
 
 class DeckEditMode extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: (
-      <Text color={colors.purple} size={20} bold>
-        Add Card
-      </Text>
-    ),
-    headerLeft: (
-      <HeaderButton left onPress={() => navigation.goBack()}>
-        <Text size={18} bold>Back</Text>
-      </HeaderButton>
-    ),
-  });
+  static navigationOptions = ({ navigation }) => {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'DeckDetail' })
+      ]
+    });
+
+    return {
+      title: (
+        <Text color={colors.purple} size={20} bold>
+          Add Card
+        </Text>
+      ),
+      headerLeft: (
+        <HeaderButton left onPress={() => navigation.dispatch(resetAction)}>
+          <Text size={18} bold>Back</Text>
+        </HeaderButton>
+      ),
+    }
+  };
 
   state = {
     question: '',
