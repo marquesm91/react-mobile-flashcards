@@ -39,7 +39,7 @@ class Quiz extends Component {
     }
 
     /* Multiple taps and hasn't spoiler and target taps are diffrent from active swiper view*/
-    if (taps >= 2 && !hasSpoiler && (targetTaps === key || targetSpoiler === -1)) {
+    if (taps >= 1 && !hasSpoiler && (targetTaps === key || targetSpoiler === -1)) {
       return <Text>Hey! You <Text size={12} bold>have to</Text> check your answer!</Text>;
     }
 
